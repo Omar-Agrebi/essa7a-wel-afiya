@@ -11,7 +11,7 @@ from app.api.schemas.opportunity_schema import (
 )
 from app.services.opportunity_service import OpportunityService
 from app.repositories.opportunity_repository import OpportunityRepository
-from app.database.session import get_db
+from database.session import get_db
 from app.api.dependencies.auth import get_current_user
 from app.models.user import User
 

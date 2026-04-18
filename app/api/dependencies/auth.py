@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from uuid import UUID
 
 from app.core.security import decode_token
-from app.database.session import get_db
+from database.session import get_db
 from app.repositories.user_repository import UserRepository
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/users/login")
@@ -14,7 +14,14 @@ async def get_current_user(
     db: AsyncSession = Depends(get_db)
 ):
     """Decode token, load user from DB, raise 401 if missing or invalid."""
-    payload = decode_token(token)
+    try:
+        payload = decode_token(token)
+    except ValueError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid or expired token",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
     user_id_str = payload.get("sub")
     if not user_id_str:
         raise HTTPException(
@@ -33,7 +40,7 @@ async def get_current_user(
         )
         
     user_repo = UserRepository(db)
-    user = await user_repo.get(user_id)
+    user = await user_repo.get_by_id(user_id)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

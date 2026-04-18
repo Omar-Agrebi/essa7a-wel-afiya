@@ -4,7 +4,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
 from app.core.logging import get_logger
-from app.database.init_db import init_db
+from database.init_db import init_db
 from app.api.middleware.cors_middleware import setup_cors_middleware
 from app.api.middleware.logging_middleware import LoggingMiddleware
 
@@ -56,3 +56,7 @@ async def global_exception_handler(request: Request, exc: Exception):
             "type": type(exc).__name__
         }
     )
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)

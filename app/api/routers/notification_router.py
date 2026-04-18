@@ -6,7 +6,7 @@ from typing import List, Dict, Any
 from app.api.schemas.notification_schema import NotificationRead
 from app.services.notification_service import NotificationService
 from app.repositories.notification_repository import NotificationRepository
-from app.database.session import get_db
+from database.session import get_db
 from app.api.dependencies.auth import get_current_user
 from app.models.user import User
 

@@ -14,12 +14,14 @@ class UserService:
         if existing_user:
             raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Email already registered")
         
-        data.password = hash_password(data.password)
-        return await self.repo.create(data)
+        user_dict = data.model_dump()
+        hashed_password = hash_password(user_dict.pop("password"))
+        user_dict["hashed_password"] = hashed_password
+        return await self.repo.create(user_dict)
 
     async def get_user(self, user_id: UUID):
         """Get user details by ID."""
-        user = await self.repo.get(user_id)
+        user = await self.repo.get_by_id(user_id)
         if not user:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
         return user
@@ -30,14 +32,14 @@ class UserService:
 
     async def update_profile(self, user_id: UUID, data: UserUpdate):
         """Update a user's profile."""
-        user = await self.repo.get(user_id)
+        user = await self.repo.get_by_id(user_id)
         if not user:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
-        return await self.repo.update(user_id, data)
+        return await self.repo.update(user_id, data.model_dump(exclude_unset=True))
 
     async def update_skills(self, user_id: UUID, skills: list[str]):
         """Update a user's skills explicitly."""
-        user = await self.repo.get(user_id)
+        user = await self.repo.get_by_id(user_id)
         if not user:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
         return await self.repo.update_skills(user_id, skills)
@@ -53,7 +55,7 @@ class UserService:
 
     async def create_access_token(self, user_id: UUID) -> str:
         """Create a JWT access token for the given user ID."""
-        return generate_access_token(data={"sub": str(user_id)})
+        return generate_access_token(str(user_id))
 
     async def get_all_users(self):
         """Get all users, typically used by recommendation pipeline."""

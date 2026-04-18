@@ -5,7 +5,7 @@ from typing import Dict, List
 from app.api.schemas.user_schema import UserCreate, UserLogin, UserRead, UserUpdate, TokenResponse
 from app.services.user_service import UserService
 from app.repositories.user_repository import UserRepository
-from app.database.session import get_db
+from database.session import get_db
 from app.api.dependencies.auth import get_current_user
 from app.models.user import User
 

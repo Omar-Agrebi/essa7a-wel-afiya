@@ -23,6 +23,11 @@ class Settings(BaseSettings):
     RECOMMENDATION_W1: float = 0.5
     RECOMMENDATION_W2: float = 0.3
     RECOMMENDATION_W3: float = 0.2
+    
+    # JWT and Authentication Settings
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+    REFRESH_TOKEN_EXPIRE_DAYS: int = 7
+    ALGORITHM: str = "HS256"
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 

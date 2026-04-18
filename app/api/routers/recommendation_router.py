@@ -6,7 +6,7 @@ from typing import List, Dict, Any
 from app.api.schemas.recommendation_schema import RecommendationRead
 from app.services.recommendation_service import RecommendationService
 from app.repositories.recommendation_repository import RecommendationRepository
-from app.database.session import get_db
+from database.session import get_db
 from app.api.dependencies.auth import get_current_user
 from app.models.user import User
 from app.api.schemas.opportunity_schema import OpportunityFilter
