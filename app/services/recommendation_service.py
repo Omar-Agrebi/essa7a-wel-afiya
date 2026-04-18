@@ -7,7 +7,7 @@ class RecommendationService:
 
     async def get_recommendations(self, user_id: UUID, top_n: int = 10):
         """Get top recommended opportunities for a user."""
-        return await self.repo.get_recommendations(user_id=user_id, top_n=top_n)
+        return await self.repo.get_top_n(user_id=user_id, n=top_n)
 
     async def store_recommendations(self, user_id: UUID, scored_opps: list[dict]) -> int:
         """Store scored opportunities as recommendations for a user."""
