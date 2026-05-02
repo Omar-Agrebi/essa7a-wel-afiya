@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Google Fonts already loaded via index.html ── */
+
+@layer base {
+  :root {
+    --observatory-bg: #0a0f1e;
+    --observatory-surface: #0f172a;
+    --observatory-surface-light: #1e293b;
+    --observatory-border: #1e3a5f;
+    --observatory-primary: #1e40af;
+    --observatory-accent: #7c3aed;
+    --observatory-text-primary: #f0f4ff;
+    --observatory-text-secondary: #94a3b8;
+    --observatory-text-muted: #475569;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background-color: var(--observatory-bg);
+    color: var(--observatory-text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--observatory-bg);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--observatory-border);
+    border-radius: 99px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--observatory-primary);
+  }
+
+  /* Text selection */
+  ::selection {
+    background: rgba(124, 58, 237, 0.35);
+    color: #f0f4ff;
+  }
+
+  /* Focus ring */
+  :focus-visible {
+    outline: 2px solid var(--observatory-accent);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+}
+
+@layer utilities {
+  .glass-card {
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--observatory-border);
+    border-radius: 0.75rem;
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, #3b5fd4, #9461f5);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .glow-border {
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+    border-color: var(--observatory-accent);
+  }
+
+  .font-display {
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Line clamp utilities */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── Select element dark styling ── */
+select option {
+  background-color: #0f172a;
+  color: #f0f4ff;
+}
+
+/* ── React Hot Toast override ── */
+.react-hot-toast {
+  font-family: 'DM Sans', sans-serif !important;
+}
