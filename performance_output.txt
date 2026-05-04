@@ -1,0 +1,101 @@
+﻿2026-05-04 17:33:28 | DEBUG | proactor_events | Using proactor: IocpProactor
+
+============================================================
+  SECTION 1: ML CLASSIFIER ACCURACY & PERFORMANCE
+============================================================
+
+--- [TYPE CLASSIFICATION REPORT] ---
+              precision    recall  f1-score   support
+
+      course       1.00      1.00      1.00         2
+  internship       1.00      1.00      1.00         5
+     postdoc       1.00      1.00      1.00         1
+     project       1.00      1.00      1.00         2
+ scholarship       1.00      1.00      1.00         6
+
+    accuracy                           1.00        16
+   macro avg       1.00      1.00      1.00        16
+weighted avg       1.00      1.00      1.00        16
+
+
+--- [CATEGORY CLASSIFICATION REPORT] ---
+                      precision    recall  f1-score   support
+
+                  AI       0.90      1.00      0.95         9
+       Cybersecurity       0.00      0.00      0.00         1
+        Data Science       0.67      1.00      0.80         4
+Software Engineering       0.00      0.00      0.00         2
+
+            accuracy                           0.81        16
+           macro avg       0.39      0.50      0.44        16
+        weighted avg       0.67      0.81      0.73        16
+
+
+--- [UNSEEN TEST SAMPLES] ---
+[FAIL] Sample: Looking for a PhD position in Switzerland focusing...
+       Expected: postdoc/AI | Predicted: scholarship/AI
+[PASS] Sample: Scholarship for African students to study Data Sci...
+       Expected: scholarship/Data Science | Predicted: scholarship/Data Science
+[FAIL] Sample: Junior developer role focusing on React and Node.j...
+       Expected: internship/Software Engineering | Predicted: internship/AI
+[PASS] Sample: Free online course about ethical hacking and netwo...
+       Expected: course/Cybersecurity | Predicted: course/Cybersecurity
+
+Unseen Generalization: 50.0%
+
+============================================================
+  SECTION 2: CLUSTERER TOPIC MODELING RESULTS
+============================================================
+2026-05-04 17:33:30 | INFO | clustering | OpportunityClusterer fitted on 80 texts into 5 clusters: {0: 'university fellow academic postdoctoral contract', 1: 'learn data certificate enroll beginner', 2: 'scholarship students stipend support monthly', 3: 'intern internship salary join learning', 4: 'project funded collaborate research phd'}
+
+Generated Clusters and their 'Topic Labels':
+Cluster 0: university fellow academic postdoctoral contract
+Cluster 1: learn data certificate enroll beginner
+Cluster 2: scholarship students stipend support monthly
+Cluster 3: intern internship salary join learning
+Cluster 4: project funded collaborate research phd
+
+Cluster Sample Content:
+ - [intern internship salary join learning] Join our team as a software engineer intern at DeepMind work...
+ - [intern internship salary join learning] Internship opportunity at Airbus for a machine learning engi...
+ - [intern internship salary join learning] INRIA is hiring a research intern in deep learning for compu...
+ - [intern internship salary join learning] Siemens software engineer intern position focusing on Python...
+ - [learn data certificate enroll beginner] Capgemini data science intern role. Work on real data pipeli...
+
+============================================================
+  SECTION 3: RECOMMENDER PERSONALIZATION TEST
+============================================================
+2026-05-04 17:33:30 | DEBUG | recommender | OpportunityRecommender fitted on 4 opportunities.
+
+User Profile: ['Python', 'Machine Learning', 'PyTorch'] | Interests: ['AI', 'Deep Learning']
+
+Top 3 Recommendations:
+1. AI Research Internship (Score: 0.871)
+   Reasons: 2 of your skills match (pytorch, python), Master level compatible, High relevance (74% match), Matches your interest in AI
+2. Scholarship for Master in AI (Score: 0.501)
+   Reasons: Master level compatible, High relevance (40% match), Matches your interest in AI
+3. Web Dev Role (Score: 0.290)
+   Reasons: Recommended based on your profile
+
+============================================================
+  SECTION 4: SCRAPER DATA EXTRACTION (MOCK-LIVE)
+============================================================
+2026-05-04 17:33:30 | DEBUG | mesa_logging | calling Model.__init__ with () and {}
+2026-05-04 17:33:30 | DEBUG | model | registered AgentInternshipScraper with agent_id 1
+2026-05-04 17:33:30 | DEBUG | model | registered AgentScholarshipScraper with agent_id 2
+
+Fetching data...
+Internships found: 20
+Scholarships found: 15
+
+Sample Extracted Item:
+ - title: AI/Data Internship (scikit-learn, Spark)
+ - type: internship
+ - category: AI
+ - description: We are looking for an intern passionate about Data Science and AI. Must know scikit-learn, Spark, NLP, MLOps. Join ESA to build amazing things.
+ - skills_required: ['scikit-learn', 'Spark', 'NLP', 'MLOps']
+ - location: Paris
+ - eligibility: Bachelor or Master
+ - deadline: May 14 2026
+ - source: LinkedIn Mock
+ - url: https://mock.linkedin.com/jobs/1b6c4a52-da42-42aa-9d2c-0bc6f2f46822

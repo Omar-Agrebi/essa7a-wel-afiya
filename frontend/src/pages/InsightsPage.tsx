@@ -633,7 +633,9 @@ const STAGES = [
   { key: 'cleaned',                    label: 'Clean',     icon: <Layers className="w-4 h-4" />,      color: '#8b5cf6' },
   { key: 'classified',                 label: 'Classify',  icon: <Brain className="w-4 h-4" />,       color: '#7c3aed' },
   { key: 'clustered',                  label: 'Cluster',   icon: <GitBranch className="w-4 h-4" />,   color: '#0ea5e9' },
-  { key: 'recommendations_generated', label: 'Recommend', icon: <Target className="w-4 h-4" />,      color: '#10b981' },
+  { key: 'stored',                     label: 'Store',     icon: <Layers className="w-4 h-4" />,      color: '#f59e0b' },
+  { key: 'recommendations_generated',  label: 'Recommend', icon: <Target className="w-4 h-4" />,      color: '#10b981' },
+  { key: 'notified',                   label: 'Notify',    icon: <Activity className="w-4 h-4" />,    color: '#ec4899' },
 ]
 
 function PipelineLog({ pipeline }: { pipeline: PipelineStatusResponse }) {

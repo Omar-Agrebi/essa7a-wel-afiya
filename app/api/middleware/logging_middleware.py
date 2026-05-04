@@ -17,7 +17,7 @@ class LoggingMiddleware(BaseHTTPMiddleware):
         
         process_time_ms = (time.time() - start_time) * 1000
         logger.info(
-            f"{request.method} {request.url.path} → "
+            f"{request.method} {request.url.path} -> "
             f"{response.status_code} ({process_time_ms:.2f}ms)"
         )
 

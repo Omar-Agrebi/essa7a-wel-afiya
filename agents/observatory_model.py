@@ -1,8 +1,10 @@
 import time
 import asyncio
 import mesa
-from mesa.time import StagedActivation
-from mesa.datacollection import DataCollector
+try:
+    from mesa.datacollection import DataCollector
+except ImportError:
+    DataCollector = None
 
 from app.core.logging import get_logger
 from app.core.config import Settings
@@ -42,13 +44,11 @@ class ObservatoryModel(mesa.Model):
         self._last_report: dict | None = None
         self._run_count: int = 0
 
-        self.schedule = StagedActivation(
-            self,
-            stage_list=["scrape", "clean", "classify", "cluster",
-                        "store", "recommend", "notify"],
-            shuffle=False,
-            shuffle_between_stages=False
-        )
+        # Mesa 3.x compatibility: removing scheduler as it's not used in the manual pipeline
+        class SimpleSchedule:
+            def __init__(self): self.agents = []
+            def add(self, agent): self.agents.append(agent)
+        self.schedule = SimpleSchedule()
 
         self.datacollector = DataCollector(
             model_reporters={
@@ -59,7 +59,7 @@ class ObservatoryModel(mesa.Model):
                 "agent_name": lambda a: a.name,
                 "last_report": lambda a: getattr(a, "get_last_report", lambda: {})(),
             }
-        )
+        ) if DataCollector is not None else None
 
         self._init_agents()
 
@@ -163,9 +163,16 @@ class ObservatoryModel(mesa.Model):
         except Exception as e:
             self.shared_data["pipeline_errors"].append(str(e))
 
-        self.schedule.step()
+        # Phase 2: Sequential stages
+        # We bypass Mesa's StagedActivation because it calls asyncio.run() internally,
+        # which fails when the model is already running in an event loop (FastAPI).
+        for agent in [self.cleaner, self.classifier, self.clusterer, 
+                      self.store_agent, self.advisor, self.notifier]:
+            report = await agent.run_safe()
+            self._agent_reports.append(report)
 
-        self.datacollector.collect(self)
+        if self.datacollector is not None:
+            self.datacollector.collect(self)
 
         duration = time.time() - start
         report = {
@@ -177,7 +184,9 @@ class ObservatoryModel(mesa.Model):
             "cleaned": len(self.shared_data["cleaned_opportunities"]),
             "classified": len(self.shared_data["classified_opportunities"]),
             "clustered": len(self.shared_data["clustered_opportunities"]),
+            "stored": next((r.get("inserted", 0) + r.get("updated", 0) for r in self._agent_reports if r.get("agent") == "AgentStore"), 0),
             "recommendations_generated": len(self.shared_data["recommendations"]),
+            "notified": next((r.get("items_processed", 0) for r in self._agent_reports if r.get("agent") == "AgentNotification"), 0),
             "agent_reports": self._agent_reports,
             "pipeline_errors": self.shared_data["pipeline_errors"]
         }

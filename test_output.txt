@@ -1,0 +1,57 @@
+﻿2026-05-04 17:27:10 | DEBUG | proactor_events | Using proactor: IocpProactor
+
+==================================================
+      INTELLIGENT OBSERVATORY: AGENT UNIT TESTS
+==================================================
+
+Running: Internship Scraper...2026-05-04 17:27:10 | DEBUG | mesa_logging | calling Model.__init__ with () and {}
+2026-05-04 17:27:10 | DEBUG | model | registered AgentInternshipScraper with agent_id 1
+ [PASS] (0.002s)
+Running: Scholarship Scraper...2026-05-04 17:27:10 | DEBUG | mesa_logging | calling Model.__init__ with () and {}
+2026-05-04 17:27:10 | DEBUG | model | registered AgentScholarshipScraper with agent_id 1
+ [PASS] (0.001s)
+Running: Project Scraper...2026-05-04 17:27:10 | DEBUG | mesa_logging | calling Model.__init__ with () and {}
+2026-05-04 17:27:10 | DEBUG | model | registered AgentProjectScraper with agent_id 1
+ [PASS] (0.001s)
+Running: Certification Scraper...2026-05-04 17:27:10 | DEBUG | mesa_logging | calling Model.__init__ with () and {}
+2026-05-04 17:27:10 | DEBUG | model | registered AgentCertificationScraper with agent_id 1
+ [PASS] (0.001s)
+Running: Data Cleaner Agent...2026-05-04 17:27:10 | DEBUG | mesa_logging | calling Model.__init__ with () and {}
+2026-05-04 17:27:10 | DEBUG | model | registered AgentDataCleaner with agent_id 1
+ [FAIL] (0.002s)
+    Error: 
+Running: Classifier Agent...2026-05-04 17:27:10 | DEBUG | mesa_logging | calling Model.__init__ with () and {}
+2026-05-04 17:27:10 | DEBUG | model | registered AgentClassifier with agent_id 1
+2026-05-04 17:27:10 | INFO | classifier | OpportunityClassifier trained ù type accuracy: 100.00%, category accuracy: 100.00%
+2026-05-04 17:27:10 | INFO | classifier_agent | OpportunityClassifier trained and ready
+ [PASS] (0.037s)
+Running: Cluster Agent...2026-05-04 17:27:10 | DEBUG | mesa_logging | calling Model.__init__ with () and {}
+2026-05-04 17:27:10 | DEBUG | model | registered AgentCluster with agent_id 1
+2026-05-04 17:27:12 | INFO | clustering | OpportunityClusterer fitted on 10 texts into 5 clusters: {0: 'text opp description clustering', 1: 'text opp description clustering', 2: 'text opp description clustering', 3: 'text opp description clustering', 4: 'text opp description clustering'}
+ [PASS] (1.672s)
+Running: Relevance Matcher Agent...2026-05-04 17:27:12 | DEBUG | mesa_logging | calling Model.__init__ with () and {}
+2026-05-04 17:27:12 | DEBUG | model | registered AgentRelevanceMatcher with agent_id 1
+ [FAIL] (0.001s)
+    Error: 'AgentRelevanceMatcher' object has no attribute 'compute_score'
+Running: Advisor Agent...2026-05-04 17:27:12 | DEBUG | mesa_logging | calling Model.__init__ with () and {}
+2026-05-04 17:27:12 | DEBUG | model | registered AgentAdvisor with agent_id 1
+2026-05-04 17:27:12 | DEBUG | model | registered AgentRelevanceMatcher with agent_id 2
+2026-05-04 17:27:12 | DEBUG | recommender | OpportunityRecommender fitted on 1 opportunities.
+ [PASS] (0.003s)
+Running: Store Agent...2026-05-04 17:27:12 | DEBUG | mesa_logging | calling Model.__init__ with () and {}
+2026-05-04 17:27:12 | DEBUG | model | registered AgentStore with agent_id 1
+ [PASS] (0.002s)
+Running: Notification Agent...2026-05-04 17:27:12 | DEBUG | mesa_logging | calling Model.__init__ with () and {}
+2026-05-04 17:27:12 | DEBUG | model | registered AgentNotification with agent_id 1
+ [PASS] (0.002s)
+
+==================================================
+                  SUMMARY
+==================================================
+Total: 11 | Passed: 9 | Failed: 2
+
+Failed Tests:
+ - Data Cleaner Agent
+ - Relevance Matcher Agent
+==================================================
+

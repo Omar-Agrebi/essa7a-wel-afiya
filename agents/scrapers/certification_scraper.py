@@ -73,7 +73,7 @@ class AgentCertificationScraper(BaseScraper):
             mocks.append({
                 "name": f"{t} ({prov})",
                 "description": f"Comprehensive {lvl.lower()} course covering practical aspects of the field. Duration estimate: {dur} months.",
-                "slug": f"mock-course-{uuid.uuid4()}",
+                "slug": f"mock-course-cert-{i}",
                 "domainTypes": [{"domainId": random.choice(["data-science", "computer-science"])}],
                 "level_mock": lvl
             })
@@ -89,7 +89,7 @@ class AgentCertificationScraper(BaseScraper):
             desc = desc[:1000]
             
         slug = raw.get("slug", "")
-        url = f"https://www.coursera.org/learn/{slug}" if slug else f"https://www.coursera.org/learn/{uuid.uuid4()}"
+        url = f"https://www.coursera.org/learn/{slug}" if slug else f"https://www.coursera.org/learn/cert-{hash(raw.get('name', ''))}"
         
         domains = raw.get("domainTypes", [])
         domain_ids = [d.get("domainId") for d in domains if isinstance(d, dict)]

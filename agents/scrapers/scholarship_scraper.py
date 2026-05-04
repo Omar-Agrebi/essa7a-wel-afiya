@@ -49,7 +49,7 @@ class AgentScholarshipScraper(BaseScraper):
                 "eligibility": lvl,
                 "deadline": dl,
                 "source": body,
-                "url": f"https://mock.scholarships.org/fund/{uuid.uuid4()}"
+                "url": f"https://mock.scholarships.org/fund/scholarship-{i}"
             })
         return mocks
 

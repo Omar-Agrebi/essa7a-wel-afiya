@@ -164,7 +164,8 @@ class OpportunityRepository(BaseRepository[Opportunity]):
         report = {"inserted": 0, "updated": 0, "errors": []}
         for item in items:
             try:
-                _, is_new = await self.upsert_by_url(item)
+                db_obj, is_new = await self.upsert_by_url(item)
+                item["id"] = db_obj.id  # Inject the DB-generated ID back into the item
                 if is_new:
                     report["inserted"] += 1
                 else:

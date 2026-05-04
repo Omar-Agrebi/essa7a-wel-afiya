@@ -50,7 +50,7 @@ class AgentProjectScraper(BaseScraper):
                 "eligibility": "PhD or Postdoc",
                 "deadline": dl,
                 "source": "Horizon Europe",
-                "url": f"https://mock.projects.eu/id/{uuid.uuid4()}"
+                "url": f"https://mock.projects.eu/id/project-{i}"
             })
         return mocks
 

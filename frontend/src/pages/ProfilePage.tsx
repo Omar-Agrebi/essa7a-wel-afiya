@@ -10,8 +10,6 @@ import { GlassCard, GlowButton, PageHeader } from '@/components/ui'
 import { getInitials, getLevelLabel } from '@/utils/formatting'
 import { formatDate } from '@/utils/formatting'
 import toast from 'react-hot-toast'
-import { clsx } from 'clsx'
-
 export default function ProfilePage() {
   const { user, logout, updateUser } = useAuthStore()
   const navigate = useNavigate()

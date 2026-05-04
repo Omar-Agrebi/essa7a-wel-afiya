@@ -22,7 +22,6 @@ function getSkillColor(skill: string): string {
 
 export function SkillGalaxy({ skills, onRemove, onAdd }: SkillGalaxyProps) {
   const [input, setInput] = useState('')
-  const [hoveredSkill, setHoveredSkill] = useState<string | null>(null)
 
   const handleAdd = () => {
     const trimmed = input.trim()
@@ -48,8 +47,6 @@ export function SkillGalaxy({ skills, onRemove, onAdd }: SkillGalaxyProps) {
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.5, x: 20 }}
-              onHoverStart={() => setHoveredSkill(skill)}
-              onHoverEnd={() => setHoveredSkill(null)}
               className="relative"
             >
               <div

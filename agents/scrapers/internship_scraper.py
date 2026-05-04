@@ -49,7 +49,7 @@ class AgentInternshipScraper(BaseScraper):
                 "eligibility": "Bachelor or Master",
                 "deadline": dl,
                 "source": "LinkedIn Mock",
-                "url": f"https://mock.linkedin.com/jobs/{uuid.uuid4()}"
+                "url": f"https://mock.linkedin.com/jobs/internship-{comp.lower()}-{i}"
             })
         return mocks
 

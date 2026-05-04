@@ -2,7 +2,6 @@ import asyncio
 import mesa
 from agents.base_agent import BaseAgent
 
-# ML module implemented in Prompt 6 — must exist before running
 from ml.inference.clustering import OpportunityClusterer
 
 class AgentCluster(BaseAgent):

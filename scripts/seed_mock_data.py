@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import aiosqlite
 
-DB_PATH = "test_observatory.db"
+DB_PATH = "observatory.db"
 
 NOW = datetime.now(timezone.utc)
 
@@ -448,7 +448,7 @@ def build_notifications(opps: list[dict], users: list[dict]) -> list[dict]:
                 "notification_id": uid(),
                 "user_id": user["user_id"],
                 "opportunity_id": opp["id"],
-                "message": f"⏰ Deadline in {days} day(s): \"{opp['title']}\" — don't miss it!",
+                "message": f"Deadline in {days} day(s): \"{opp['title']}\" — don't miss it!",
                 "status": "unread" if random.random() > 0.4 else "read",
                 "timestamp": (NOW - timedelta(hours=random.randint(1, 48))).isoformat(),
             })
@@ -458,7 +458,7 @@ def build_notifications(opps: list[dict], users: list[dict]) -> list[dict]:
             "notification_id": uid(),
             "user_id": user["user_id"],
             "opportunity_id": random.choice(opps)["id"],
-            "message": f"🎯 New opportunities matching your profile are available — check your dashboard!",
+            "message": f"New opportunities matching your profile are available — check your dashboard!",
             "status": "unread",
             "timestamp": (NOW - timedelta(hours=random.randint(1, 6))).isoformat(),
         })
@@ -469,7 +469,7 @@ def build_notifications(opps: list[dict], users: list[dict]) -> list[dict]:
 # ── DATABASE SEEDER ────────────────────────────────────────────────────────────
 
 async def seed():
-    print("\n🌱  Seeding mock data into:", DB_PATH)
+    print("\n[SEED] Seeding mock data into:", DB_PATH)
     print("=" * 55)
 
     async with aiosqlite.connect(DB_PATH) as db:
@@ -530,7 +530,7 @@ async def seed():
         for table in ["notifications", "recommendations", "opportunities", "users"]:
             await db.execute(f"DELETE FROM {table}")
         await db.commit()
-        print("✅  Cleared existing data")
+        print("[OK] Cleared existing data")
 
         # ── 3. Insert opportunities ─────────────────────────────────────────
         for opp in OPPORTUNITIES:
@@ -546,7 +546,7 @@ async def seed():
                 ts(), ts()
             ))
         await db.commit()
-        print(f"✅  Inserted {len(OPPORTUNITIES)} opportunities")
+        print(f"[OK] Inserted {len(OPPORTUNITIES)} opportunities")
 
         # ── 4. Insert users ─────────────────────────────────────────────────
         for user in USERS:
@@ -558,12 +558,12 @@ async def seed():
                 user["interests"], user["level"], ts(), ts()
             ))
         await db.commit()
-        print(f"✅  Inserted {len(USERS)} users")
+        print(f"[OK] Inserted {len(USERS)} users")
         for u in USERS:
-            print(f"    👤 {u['name']} ({u['email']}) — level: {u['level']}")
+            print(f"    - {u['name']} ({u['email']}) — level: {u['level']}")
 
         # ── 5. Generate and insert recommendations ──────────────────────────
-        print("\n🤖  Running ML recommender to generate personalized recommendations...")
+        print("\n[ML] Running ML recommender to generate personalized recommendations...")
         recs = build_recommendations(OPPORTUNITIES, USERS)
         for rec in recs:
             try:
@@ -577,7 +577,7 @@ async def seed():
             except Exception as e:
                 pass
         await db.commit()
-        print(f"✅  Generated {len(recs)} recommendations across {len(USERS)} users")
+        print(f"[OK] Generated {len(recs)} recommendations across {len(USERS)} users")
 
         # ── 6. Insert notifications ─────────────────────────────────────────
         notifs = build_notifications(OPPORTUNITIES, USERS)
@@ -590,10 +590,10 @@ async def seed():
                 notif["status"], notif["timestamp"]
             ))
         await db.commit()
-        print(f"✅  Generated {len(notifs)} notifications")
+        print(f"[OK] Generated {len(notifs)} notifications")
 
         # ── 7. Summary stats ────────────────────────────────────────────────
-        print("\n📊  Database summary:")
+        print("\n[STATS] Database summary:")
         for table in ["opportunities", "users", "recommendations", "notifications"]:
             row = await db.execute(f"SELECT COUNT(*) FROM {table}")
             count = (await row.fetchone())[0]
@@ -605,13 +605,13 @@ async def seed():
         for r in await row.fetchall():
             print(f"      {r[0]:20s}: {r[1]} items")
 
-    print("\n🎉  Seeding complete!")
+    print("\n[DONE] Seeding complete!")
     print(f"    DB: {DB_PATH}")
     print("\n    Demo login credentials:")
-    print("    ┌────────────────────────────────────────────────────┐")
+    print("    +----------------------------------------------------+")
     for u in USERS:
-        print(f"    │  {u['email']:30s}  Password123!  │")
-    print("    └────────────────────────────────────────────────────┘\n")
+        print(f"    |  {u['email']:30s}  Password123!  |")
+    print("    +----------------------------------------------------+")
 
 
 if __name__ == "__main__":

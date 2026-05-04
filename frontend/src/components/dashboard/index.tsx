@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Radio, CheckCircle, Loader2, BellOff, Rocket, Clock } from 'lucide-react'
+import { Radio, CheckCircle, BellOff, Rocket } from 'lucide-react'
 import type { Recommendation, Notification, PipelineStatusResponse } from '@/types'
 import { formatRelativeTime, formatScore, getTypeColor } from '@/utils/formatting'
 import { getDeadlineUrgency, getUrgencyColors, getDaysUntil } from '@/utils/deadline'
